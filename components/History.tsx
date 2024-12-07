@@ -8,7 +8,7 @@ const History = async () => {
     if (!transactions) redirect('/signin')
 	return (
 		<div id="history" className="flex flex-col divide-slate-400 gap-2 my-3">
-			<h3 className="text-3xl"> History </h3>
+			<h3 className="text-xl"> History </h3>
             <HistoryTab transactions={transactions}/>
 		</div>
 	);

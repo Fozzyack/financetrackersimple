@@ -19,9 +19,9 @@ const app = async () => {
     const in_out = await inOut() 
     if(!in_out) redirect('/signin')
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen my-8">
+        <div className="flex flex-col items-center justify-center min-h-screen md:my-8 mx-2 w-full">
             <div className="divide-y divide-slate-300">
-            <div className="py-2">
+            <div className="py-2 flex flex-col gap-2">
                 <Header sessionName={session.userObj.name} user_id={session.userObj.id}/>
                 <Balance balance={balance}/>
             </div>
