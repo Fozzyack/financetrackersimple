@@ -3,6 +3,7 @@ import React from 'react'
 const AddEntry = ({session_user_id} : { session_user_id : number }) => {
     const [name, setName] = React.useState<string>("")
     const [price, setPrice] = React.useState<string>("")
+    const [loading, setLoading] = React.useState<boolean>(false)
 
     const changeLabel = (e : React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value)
@@ -12,6 +13,7 @@ const AddEntry = ({session_user_id} : { session_user_id : number }) => {
     }
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
+        setLoading(true)
         e.preventDefault();
         console.log(name)
         console.log(price)
@@ -24,8 +26,17 @@ const AddEntry = ({session_user_id} : { session_user_id : number }) => {
             }),
             headers: { "Content-Type": "application/json" }
         })
-        .then(() =>
-            window.location.reload()
+        .then(() => {
+            setLoading(false);
+            window.location.reload();
+        })
+    }
+
+    if(loading) {
+        return (
+            <div className="flex flex-col items-center justify-center">
+                <h1> Loading... </h1>
+            </div>
         )
     }
 
