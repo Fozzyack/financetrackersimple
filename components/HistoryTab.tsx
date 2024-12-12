@@ -1,4 +1,5 @@
 'use client'
+import { motion } from "motion/react";
 
 
 const HistoryTab = ({ transactions } : { transactions : any[] }) => {
@@ -23,7 +24,14 @@ const HistoryTab = ({ transactions } : { transactions : any[] }) => {
         <div className="flex flex-col gap-2">
             {
                 transactions.map((transaction, index) => (
-                    <div key={index} className="relative group">
+                    <motion.div 
+                    key={index} 
+                    className="relative group"
+                    initial={{ x: -3000 }}
+                    animate={{ x:0 }}
+                    transition={{delay: index * 0.15, stiffness: 100}}
+
+                    >
                         <div className="w-full flex justify-between items-center relative px-2 py-4 border-black border shadow-lg z-10 bg-white">
                             <span> {transaction.label} </span>
                             <span> {aud.format(transaction.amount)} </span>
@@ -39,7 +47,7 @@ const HistoryTab = ({ transactions } : { transactions : any[] }) => {
                             x
                             </button> 
                             )}
-                    </div>
+                    </motion.div>
 
                 ))
             }

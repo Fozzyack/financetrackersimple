@@ -1,10 +1,16 @@
 import { formatMoney, getSession } from "./lib";
 import pool from "./pool";
 
+export async function timeFrame(days: number) {
+    const result = new Date(Date.now());
+    result.setDate(result.getDate() - days);
+    return result
+}
+
+
 export async function getTransactions() {
 	const session = await getSession();
 	if (!session) return null;
-
 	const transactions = await pool.query(
 		"SELECT * FROM transactions WHERE user_id=$1",
 		[session.userObj.id],
@@ -24,7 +30,6 @@ export async function getBalance() {
 export async function inOut() {
 	const transactions = await getTransactions();
 	if (!transactions) return null;
-    console.log(transactions)
 	const income = transactions?.reduce((total, transaction) => {
 		if (parseFloat(transaction.amount) >= 0) {
 			return total + parseFloat(transaction.amount);

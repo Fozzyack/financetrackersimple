@@ -2,6 +2,9 @@ import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import pool from './pool'
 
+const TO_SECONDS = 1000;
+const TO_MINUTES = 60
+
 const secretKey = process.env.SESSION_SECRET;
 const key = new TextEncoder().encode(secretKey)
 
@@ -14,7 +17,7 @@ export async function login(formData: FormData) {
     }
     const userObj = user.rows[0]
 
-    const expires = new Date(Date.now() + 100 * 1000);
+    const expires = new Date(Date.now() + (10 * TO_MINUTES * TO_SECONDS));
     const session = await encrypt({ userObj, expires })
     const cookieStore = await cookies()
     cookieStore.set('session', session, {expires, httpOnly: true})
@@ -32,7 +35,7 @@ export async function encrypt(payload: any) {
     return await new SignJWT(payload)
     .setProtectedHeader({alg: 'HS256'})
     .setIssuedAt()
-    .setExpirationTime('100 sec from now')
+    .setExpirationTime('10 minutes from now')
     .sign(key);
 }
 

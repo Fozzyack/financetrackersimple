@@ -28,6 +28,9 @@ const app = async () => {
                 <Expenses income={in_out.income} expense={in_out.expense}/>
                 <History />
                 <AddEntry session_user_id={session.userObj.id}/>
+                <p>
+                    Your code: {session.userObj.code} (please remember)
+                </p>
             </div>
         </div>
     )
